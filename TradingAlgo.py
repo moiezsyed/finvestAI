@@ -21,15 +21,30 @@ class AITrader(Strategy):
         Strategy (Class): Automated trading algorithm class provided by 'lumibot'
     """
 
-    def initialize(self):
+    def initialize(self, symbol:str="SPY"):
         """Runs everytime (once) when an object is instantiated
+
+        Args:
+            symbol (string): Represents a ticker to represent a particular stock on the exchange.
         """
-        pass
+        self.symbol = symbol
+        # https://lumibot.lumiwealth.com/strategy_properties/strategies.strategy.Strategy.sleeptime.html
+        self.sleeptime = "24H"
+        self.last_trade = None
 
     def on_trading_iteration(self):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
         """
-        pass
+        if self.last_trade == None:
+            order = self.create_order(
+                self.symbol,
+                10,
+                "buy",
+                type="market"
+            )
+            # executing order
+            self.submit_order(order)
+            self.last_trade = "buy"
 
 # Running the Algorithm
 # dates
