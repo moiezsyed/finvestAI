@@ -2,7 +2,7 @@ from lumibot.brokers import Alpaca  # broker
 from lumibot.backtesting import YahooDataBacktesting # backtesting framework
 from lumibot.strategies.strategy import Strategy # automated trading
 from lumibot.traders import Trader # deployement
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta as td
 
 API_KEY = "PKPRVPP06CANE9O63SN9"
 API_SECRET = "6FfKbsWFlbFHd4JEbnMaB337RTSHoDWIgRYZLPj7"
@@ -14,8 +14,8 @@ ALPACA_CREDS = {
     "API_ENDPOINT": API_ENDPOINT
 }
 
-class MlTrader(Strategy):
-    """All ML-based trading algorithm logic
+class AITrader(Strategy):
+    """AI-based trading algorithm strategy class
 
     Args:
         Strategy (Class): Automated trading algorithm class provided by 'lumibot'
@@ -30,6 +30,20 @@ class MlTrader(Strategy):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
         """
         pass
+
+# Running the Algorithm
+# dates
+end_date = dt.now().date()
+start_date = dt.now() - td(days=30)
+
+# broker for trading
+broker = Alpaca(ALPACA_CREDS)
+
+# initialize the strategy
+strategy = AITrader(name='aistrategy', broker=broker, parameters={})
+
+# backtest the strategy
+strategy.backtest(YahooDataBacktesting, start_date, end_date, end_date, parameters={})
 
 
 
