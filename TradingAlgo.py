@@ -14,3 +14,23 @@ ALPACA_CREDS = {
     "API_ENDPOINT": API_ENDPOINT
 }
 
+class MlTrader(Strategy):
+    """All ML-based trading algorithm logic
+
+    Args:
+        Strategy (Class): Automated trading algorithm class provided by 'lumibot'
+    """
+
+    def initialize(self):
+        """Runs everytime (once) when an object is instantiated
+        """
+        pass
+
+    def on_trading_iteration(self):
+        """Runs everytime new data is retrieved from the data source (news, information, etc.)
+        """
+        pass
+
+
+
+
