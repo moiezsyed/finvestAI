@@ -15,7 +15,7 @@ ALPACA_CREDS = {
 }
 
 class AITrader(Strategy):
-    """AI-based trading algorithm strategy class
+    """AI-based trading algorithm strategy class, based on the lifecycle method documented at: https://lumibot.lumiwealth.com/lifecycle_methods.html
 
     Args:
         Strategy (Class): Automated trading algorithm class provided by 'lumibot'
