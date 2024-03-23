@@ -55,16 +55,18 @@ class AITrader(Strategy):
         # retrieve position sizing variables
         available_cash, last_price, quantity_per_trade = self.position_sizing()
 
-        if self.last_trade == None:
-            order = self.create_order(
-                self.symbol,
-                quantity_per_trade,
-                "buy",
-                type="market"
-            )
-            # executing order
-            self.submit_order(order)
-            self.last_trade = "buy"
+        # logic to make sure cash is always greater than last known asset price before purchase
+        if available_cash > last_price:
+            if self.last_trade == None:
+                order = self.create_order(
+                    self.symbol,
+                    quantity_per_trade,
+                    "buy",
+                    type="market"
+                )
+                # executing order
+                self.submit_order(order)
+                self.last_trade = "buy"
 
 # Running the Algorithm
 # datetime objects
