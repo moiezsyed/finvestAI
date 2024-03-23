@@ -66,7 +66,7 @@ end_date = dt(2023,12,31)
 broker = Alpaca(ALPACA_CREDS)
 
 # initialize the strategy
-strategy = AITrader(name='aistrategy', broker=broker, parameters={"symbol":"SPY"})
+strategy = AITrader(name='aistrategy', broker=broker, parameters={"symbol":"SPY", "cash_at_risk": 0.5})
 
 # backtest the strategy
-strategy.backtest(YahooDataBacktesting, start_date, end_date, parameters={"symbol":"SPY"})
+strategy.backtest(YahooDataBacktesting, start_date, end_date, parameters={"symbol":"SPY", "cash_at_risk": 0.5})
