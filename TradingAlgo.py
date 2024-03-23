@@ -21,16 +21,18 @@ class AITrader(Strategy):
         Strategy (Class): Automated trading algorithm class provided by 'lumibot'
     """
 
-    def initialize(self, symbol:str="SPY"):
+    def initialize(self, symbol:str="SPY", cash_at_risk:float=0.5):
         """Runs everytime (once) when an object is instantiated
 
         Args:
             symbol (string): Represents a ticker to represent a particular stock on the exchange.
+            cash_at_risk (float): Metric representing cash balance to be risked at every trade (0.5 -> 50%)
         """
         self.symbol = symbol
         # https://lumibot.lumiwealth.com/strategy_properties/strategies.strategy.Strategy.sleeptime.html
         self.sleeptime = "24H"
         self.last_trade = None
+        self.cash_at_risk = cash_at_risk
 
     def position_sizing(self):
         # available cash
