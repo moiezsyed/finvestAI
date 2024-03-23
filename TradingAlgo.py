@@ -11,7 +11,7 @@ API_ENDPOINT = "https://paper-api.alpaca.markets/v2"
 ALPACA_CREDS = {
     "API_KEY": API_KEY,
     "API_SECRET": API_SECRET,
-    "API_ENDPOINT": API_ENDPOINT
+    "PAPER": True
 }
 
 class AITrader(Strategy):
@@ -47,19 +47,17 @@ class AITrader(Strategy):
             self.last_trade = "buy"
 
 # Running the Algorithm
-# dates
-end_date = dt.now().date()
-start_date = dt.now() - td(days=30)
+# datetime objects
+# end_date = dt.now() - td(days=1)    # yesterday
+# start_date = end_date - td(days=30) # 1 month back from 'end_date'
+start_date = dt(2023,12,15)
+end_date = dt(2023,12,31) 
 
 # broker for trading
 broker = Alpaca(ALPACA_CREDS)
 
 # initialize the strategy
-strategy = AITrader(name='aistrategy', broker=broker, parameters={})
+strategy = AITrader(name='aistrategy', broker=broker, parameters={"symbol":"SPY"})
 
 # backtest the strategy
-strategy.backtest(YahooDataBacktesting, start_date, end_date, end_date, parameters={})
-
-
-
-
+strategy.backtest(YahooDataBacktesting, start_date, end_date, parameters={"symbol":"SPY"})
