@@ -62,7 +62,9 @@ class AITrader(Strategy):
                     self.symbol,
                     quantity_per_trade,
                     "buy",
-                    type="market"
+                    type="bracket",
+                    take_profit_price=last_price*1.20,  # 120% of 'last_price' considered profit
+                    stop_loss_price=last_price*0.95 # 95% of 'last_price' considered loss 
                 )
                 # executing order
                 self.submit_order(order)
