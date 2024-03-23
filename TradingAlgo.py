@@ -42,11 +42,8 @@ class AITrader(Strategy):
             last_price (float): Last price of the stock/ticker
             quantity_per_trade (float): Cash we're risking per trade from the cash being risked
         """
-        # available cash
         cash = self.get_cash()
-        # last price after buying/selling stock
         last_price = self.get_last_price(self.symbol)
-        # formula for calculating how much of our cash that we're risking per trade to be used in each trade
         quantity_per_trade = round((cash * self.cash_at_risk) / last_price, 0)
 
         return cash, last_price, quantity_per_trade
