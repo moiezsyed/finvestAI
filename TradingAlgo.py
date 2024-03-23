@@ -58,7 +58,7 @@ class AITrader(Strategy):
         if self.last_trade == None:
             order = self.create_order(
                 self.symbol,
-                10,
+                quantity_per_trade,
                 "buy",
                 type="market"
             )
