@@ -32,6 +32,13 @@ class AITrader(Strategy):
         self.sleeptime = "24H"
         self.last_trade = None
 
+    def position_sizing(self):
+        # available cash
+        cash = self.get_cash()
+        # last price after buying/selling stock
+        last_price = self.get_last_price(self.symbol)
+
+
     def on_trading_iteration(self):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
         """
