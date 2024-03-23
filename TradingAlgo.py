@@ -38,8 +38,8 @@ class AITrader(Strategy):
         """Determined how much of an asset to buy or sell, directly impacting the potential profit or loss.
 
         Returns:
-            cash (float): Available cash in the account
-            last_price (float): Last price of the stock/ticker
+            cash (float): Available cash in the account (https://lumibot.lumiwealth.com/strategy_properties/strategies.strategy.Strategy.cash.html)
+            last_price (float): Last known price of the stock/ticker (https://lumibot.lumiwealth.com/strategy_methods.data/lumibot.strategies.strategy.Strategy.get_last_price.html)
             quantity_per_trade (float): Cash we're risking per trade from the cash being risked
         """
         cash = self.get_cash()
@@ -52,6 +52,9 @@ class AITrader(Strategy):
     def on_trading_iteration(self):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
         """
+        # retrieve position sizing variables
+        available_cash, last_price, quantity_per_trade = self.position_sizing()
+
         if self.last_trade == None:
             order = self.create_order(
                 self.symbol,
