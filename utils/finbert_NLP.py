@@ -16,4 +16,7 @@ def sentiment_estimate(news):
     """
     # check if news populated
     if news:
+        # tokenization
         tokens = tokenizer(news, return_tensors='pt', padding=True).to(device)
+        # model prediction; returns raw, unnormalized scores for each class (logits)
+        result = model(tokens["input_ids"], attention_mask=tokens["attention_mask"])["logits"]
