@@ -106,6 +106,7 @@ class AITrader(Strategy):
         if available_cash > last_price:
             if self.last_trade == None:
                 probability, sentiment = self.get_sentiment()
+                print(probability, sentiment)
                 order = self.create_order(
                     self.symbol,
                     quantity_per_trade,
