@@ -101,30 +101,44 @@ class AITrader(Strategy):
         """
         # retrieve position sizing variables
         available_cash, last_price, quantity_per_trade = self.position_sizing()
+        probability, sentiment = self.get_sentiment()
 
         # logic to make sure cash is always greater than last known asset price before purchase
         if available_cash > last_price:
-            if self.last_trade == None:
-                probability, sentiment = self.get_sentiment()
-                print(probability, sentiment)
+            # 'buy' logic
+            if sentiment == 'positive' and probability >.995:
+                if self.last_trade == "sell": 
+                    self.sell_all() 
                 order = self.create_order(
                     self.symbol,
                     quantity_per_trade,
                     "buy",
                     type="bracket",
                     take_profit_price=last_price*1.20,  # 120% of 'last_price' considered profit
-                    stop_loss_price=last_price*0.95 # 95% of 'last_price' considered loss 
+                    stop_loss_price=last_price*0.95 # 95% of 'last_price' considered loss in 'buy'
                 )
                 # executing order
                 self.submit_order(order)
                 self.last_trade = "buy"
+            # 'sell' logic
+            elif sentiment == 'negative' and probability > 0.995:
+                if self.last_trade == "buy": 
+                    self.sell_all() 
+                order = self.create_order(
+                    self.symbol, 
+                    quantity_per_trade, 
+                    "sell", 
+                    type="bracket", 
+                    take_profit_price=last_price*.8, # 80% of 'last_price' considered loss
+                    stop_loss_price=last_price*1.05 # 105% of 'last_price' considered profit in 'sell'
+                )
+                self.submit_order(order) 
+                self.last_trade = "sell"
 
 # Running the Algorithm
 # datetime objects
-# end_date = dt.now() - td(days=1)    # yesterday
-# start_date = end_date - td(days=30) # 1 month back from 'end_date'
-start_date = dt(2023,12,15)
-end_date = dt(2023,12,31) 
+end_date = dt.now() - td(days=1)    # yesterday
+start_date = end_date - td(days=365) # 1 year back from 'end_date' as our timeline start
 
 # broker for trading
 broker = Alpaca(ALPACA_CREDS)
