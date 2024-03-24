@@ -10,9 +10,15 @@ labels = ["positive", "negative", "neutral"]
 # Sentiment Anaysis
 def sentiment_estimate(news):
     """Performs sentiment analysis on financial news, based on pre-trained NLP model 'finBERT'.
+    If 'news' is populated, this function returns the highest probability and it's associated sentiment.
+    If not, this function returns 0 and 'neutral' as default values.
 
     Args:
         news (list): Most recent financial news related to a particular asset
+
+    Returns:
+        probability (float): Highest probability for the sentiments (classes) for the input texts
+        sentiment (string): The label associated with the probability
     """
     # check if news populated
     if news:
@@ -26,3 +32,6 @@ def sentiment_estimate(news):
         probability = result[torch.argmax(result)]
         # get the correspodning sentiment (highest sentiment)
         sentiment = labels[torch.argmax(result)]
+        return probability, sentiment
+    else:
+        return 0, labels[-1]
