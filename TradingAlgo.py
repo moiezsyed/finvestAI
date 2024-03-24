@@ -68,7 +68,14 @@ class AITrader(Strategy):
         # get date range in string for fetching the news
         start_date, end_date = self.get_dates_str()
 
+        # fetch the news based on the asset ticket, start and end dates
         news = self.api.get_news(symbol=self.symbol, start=start_date ,end=end_date)
+
+        # process the news in a readbale format
+        processed_news = [event.__dict__["_raw"]["headline"] for event in news]
+        
+        return processed_news 
+
 
     def on_trading_iteration(self):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
