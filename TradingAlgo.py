@@ -53,6 +53,10 @@ class AITrader(Strategy):
     def get_dates_str(self):
         """Gets start and end dates for fetching the news to perform sentiment analysis on.
          This method emphasizes the most up-to-date (recent) news.
+
+         Returns:
+            start_date (string): The start date for fetching the relevant news from
+            end_date (string): The end date for fetching the relevant news till
         """
         # today
         end_date = (self.get_datetime()).strftime('%Y-%m-%d')
@@ -64,6 +68,9 @@ class AITrader(Strategy):
 
     def get_news(self):
         """Gets news for the relevant asset, using the REST API for Alpaca
+
+        Returns:
+            processed_news (list): Relevant news articles, processed in a readable format, to perform sentiment analysis on
         """
         # get date range in string for fetching the news
         start_date, end_date = self.get_dates_str()
