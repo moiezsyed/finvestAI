@@ -3,6 +3,7 @@ from lumibot.backtesting import YahooDataBacktesting # backtesting framework
 from lumibot.strategies.strategy import Strategy # automated trading
 from lumibot.traders import Trader # deployement
 from datetime import datetime as dt, timedelta as td
+from alpaca_trade_api import REST
 
 API_KEY = "PKPRVPP06CANE9O63SN9"
 API_SECRET = "6FfKbsWFlbFHd4JEbnMaB337RTSHoDWIgRYZLPj7"
