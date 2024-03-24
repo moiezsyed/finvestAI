@@ -94,7 +94,6 @@ class AITrader(Strategy):
         if available_cash > last_price:
             if self.last_trade == None:
                 news = self.get_news()
-                print(news)
                 order = self.create_order(
                     self.symbol,
                     quantity_per_trade,
