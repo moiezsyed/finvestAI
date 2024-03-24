@@ -105,7 +105,7 @@ class AITrader(Strategy):
         # logic to make sure cash is always greater than last known asset price before purchase
         if available_cash > last_price:
             if self.last_trade == None:
-                news = self.get_news()
+                probability, sentiment = self.get_sentiment()
                 order = self.create_order(
                     self.symbol,
                     quantity_per_trade,
