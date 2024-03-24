@@ -4,6 +4,7 @@ from lumibot.strategies.strategy import Strategy # automated trading
 from lumibot.traders import Trader # deployement
 from datetime import datetime as dt, timedelta as td
 from alpaca_trade_api import REST
+from utils.finbert_NLP import sentiment_estimate
 
 API_KEY = "PKPRVPP06CANE9O63SN9"
 API_SECRET = "6FfKbsWFlbFHd4JEbnMaB337RTSHoDWIgRYZLPj7"
@@ -81,8 +82,19 @@ class AITrader(Strategy):
         # process the news in a readbale format
         processed_news = [event.__dict__["_raw"]["headline"] for event in news]
         
-        return processed_news 
+        return processed_news
 
+    def get_sentiment(self):
+        """Perform sentiment analysis on news articles, pertaining to a particular asset
+
+        Returns:
+            prob (float): Probability of the accumulative news articles
+            sentiment (string): Sentiment based on the calculated probability
+        """
+        news = self.get_news()
+        prob, sentiment = sentiment_estimate(news)
+
+        return prob, sentiment
 
     def on_trading_iteration(self):
         """Runs everytime new data is retrieved from the data source (news, information, etc.)
