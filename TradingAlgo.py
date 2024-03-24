@@ -50,7 +50,7 @@ class AITrader(Strategy):
 
         return cash, last_price, quantity_per_trade
 
-    def get_dates_str(self):
+    def get_news_dates_str(self):
         """Gets start and end dates for fetching the news to perform sentiment analysis on.
          This method emphasizes the most up-to-date (recent) news.
 
@@ -73,7 +73,7 @@ class AITrader(Strategy):
             processed_news (list): Relevant news articles, processed in a readable format, to perform sentiment analysis on
         """
         # get date range in string for fetching the news
-        start_date, end_date = self.get_dates_str()
+        start_date, end_date = self.get_news_dates_str()
 
         # fetch the news based on the asset ticket, start and end dates
         news = self.api.get_news(symbol=self.symbol, start=start_date ,end=end_date)
