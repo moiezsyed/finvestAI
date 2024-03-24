@@ -34,6 +34,7 @@ class AITrader(Strategy):
         self.sleeptime = "24H"
         self.last_trade = None
         self.cash_at_risk = cash_at_risk
+        self.api = REST(key_id=API_KEY, secret_key=API_SECRET, base_url=API_ENDPOINT)
 
     def position_sizing(self):
         """Determined how much of an asset to buy or sell, directly impacting the potential profit or loss.
