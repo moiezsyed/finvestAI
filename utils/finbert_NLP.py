@@ -35,3 +35,8 @@ def sentiment_estimate(news):
         return probability, sentiment
     else:
         return 0, labels[-1]
+
+if __name__ == "__main__":
+    tensor, sentiment = sentiment_estimate(['markets responded negatively to the news!','traders were displeased!'])
+    print(tensor, sentiment)
+    print(torch.cuda.is_available())
