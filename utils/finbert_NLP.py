@@ -6,3 +6,14 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
 model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert").to(device)
 labels = ["positive", "negative", "neutral"]
+
+# Sentiment Anaysis
+def sentiment_estimate(news):
+    """Performs sentiment analysis on financial news, based on pre-trained NLP model 'finBERT'.
+
+    Args:
+        news (list): Most recent financial news related to a particular asset
+    """
+    # check if news populated
+    if news:
+        tokens = tokenizer(news, return_tensors='pt', padding=True).to(device)
