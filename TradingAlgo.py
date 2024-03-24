@@ -106,7 +106,7 @@ class AITrader(Strategy):
         # logic to make sure cash is always greater than last known asset price before purchase
         if available_cash > last_price:
             # 'buy' logic
-            if sentiment == 'positive' and probability >.995:
+            if sentiment == 'positive' and probability >.999:
                 if self.last_trade == "sell": 
                     self.sell_all() 
                 order = self.create_order(
@@ -121,7 +121,7 @@ class AITrader(Strategy):
                 self.submit_order(order)
                 self.last_trade = "buy"
             # 'sell' logic
-            elif sentiment == 'negative' and probability > 0.995:
+            elif sentiment == 'negative' and probability > 0.999:
                 if self.last_trade == "buy": 
                     self.sell_all() 
                 order = self.create_order(
@@ -137,7 +137,7 @@ class AITrader(Strategy):
 
 # Running the Algorithm
 # datetime objects
-end_date = dt.now() - td(days=1)    # yesterday
+end_date = dt.now() - td(days=3)    # 3 days ago
 start_date = end_date - td(days=365) # 1 year back from 'end_date' as our timeline start
 
 # broker for trading
