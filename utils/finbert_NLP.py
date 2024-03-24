@@ -20,3 +20,5 @@ def sentiment_estimate(news):
         tokens = tokenizer(news, return_tensors='pt', padding=True).to(device)
         # model prediction; returns raw, unnormalized scores for each class (logits)
         result = model(tokens["input_ids"], attention_mask=tokens["attention_mask"])["logits"]
+        # apply softmax and summation
+        result = torch.nn.functional.softmax(torch.sum(result, 0), dim=-1)
