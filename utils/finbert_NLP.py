@@ -22,3 +22,7 @@ def sentiment_estimate(news):
         result = model(tokens["input_ids"], attention_mask=tokens["attention_mask"])["logits"]
         # apply softmax and summation
         result = torch.nn.functional.softmax(torch.sum(result, 0), dim=-1)
+        # get the probability (highest probability)
+        probability = result[torch.argmax(result)]
+        # get the correspodning sentiment (highest sentiment)
+        sentiment = labels[torch.argmax(result)]
