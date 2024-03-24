@@ -59,12 +59,12 @@ class AITrader(Strategy):
             end_date (string): The end date for fetching the relevant news till
         """
         # today
-        end_date = (self.get_datetime()).strftime('%Y-%m-%d')
+        end_date = self.get_datetime()
         # 3 days prior (range to get the news from)
-        start_date = (end_date - td(days=3)).strftime('%Y-%m-%d')
+        start_date = end_date - td(days=3)
         
         # convert to string to send over the REST API
-        return start_date, end_date
+        return start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')
 
     def get_news(self):
         """Gets news for the relevant asset, using the REST API for Alpaca
